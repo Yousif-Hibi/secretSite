@@ -32,17 +32,7 @@ Ensure you have the following installed:
    ```sh
    npm install
    ```
-3. Create a `.env` file in the root directory and add the following variables:
-   ```env
-   SESSION_SECRET=your_secret_key
-   PG_USER=your_pg_username
-   PG_HOST=your_pg_host
-   PG_DATABASE=your_pg_database
-   PG_PASSWORD=your_pg_password
-   PG_PORT=your_pg_port
-   GOOGLE_CLIENT_ID=your_google_client_id
-   GOOGLE_CLIENT_SECRET=your_google_client_secret
-   ```
+
 4. Set up your PostgreSQL database:
    ```sql
    CREATE TABLE users (
@@ -74,7 +64,6 @@ secrets-app/
 │   ├── secrets.ejs
 │   ├── submit.ejs
 │   ├── partials/
-│── .env                     # Environment variables
 │── index.js                  # Main server file
 │── package.json              # Dependencies and scripts
 │── README.md                 # Project documentation
