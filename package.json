@@ -1,7 +1,7 @@
 {
   "name": "9.0-secrets-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "The **Secrets Application** is a secure platform where users can anonymously share and view secrets. It is designed with user authentication and data privacy as core principles. The project demonstrates the practical implementation of web development concepts, focusing on secure user authentication, database management, and OAuth integration.",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -21,5 +21,14 @@
     "passport-google-oauth2": "^0.2.0",
     "passport-local": "^1.0.0",
     "pg": "^8.11.3"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yousif-Hibi/secretSite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Yousif-Hibi/secretSite/issues"
+  },
+  "homepage": "https://github.com/Yousif-Hibi/secretSite#readme"
 }

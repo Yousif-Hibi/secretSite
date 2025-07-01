@@ -32,6 +32,9 @@ const db = new pg.Client({
   database: process.env.PG_DATABASE,
   password: process.env.PG_PASSWORD,
   port: process.env.PG_PORT,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 db.connect();
 
@@ -64,35 +67,32 @@ app.get("/secrets", async (req, res) => {
       ]);
       const secret = result.rows[0].secret;
       
-      if(secret != null){
+      if (secret != null) {
         console.log(secret);
         res.render("secrets.ejs", { secret: secret });
-      }else{
+      } else {
         res.render("secrets.ejs", { secret: "Jack Bauer is my hero." });
       }
     } catch (err) {
       console.log(err);
     }
-
-
   } else {
     res.redirect("/login");
   }
 });
 
-
-
 app.get("/submit", async (req, res) => {
   if (req.isAuthenticated()) {
     try {
       res.render("submit.ejs");
-    }catch(err){
+    } catch (err) {
       console.log(err);
-    } 
-  }else {
+    }
+  } else {
     res.redirect("/login");
   }
 });
+
 app.get(
   "/auth/google",
   passport.authenticate("google", {
@@ -126,7 +126,7 @@ app.post("/register", async (req, res) => {
     ]);
 
     if (checkResult.rows.length > 0) {
-      req.redirect("/login");
+      res.redirect("/login");
     } else {
       bcrypt.hash(password, saltRounds, async (err, hash) => {
         if (err) {
@@ -138,8 +138,12 @@ app.post("/register", async (req, res) => {
           );
           const user = result.rows[0];
           req.login(user, (err) => {
-            console.log("success");
-            res.redirect("/secrets");
+            if (err) {
+              console.log(err);
+            } else {
+              console.log("success");
+              res.redirect("/secrets");
+            }
           });
         }
       });
@@ -149,23 +153,22 @@ app.post("/register", async (req, res) => {
   }
 });
 
-
 app.post("/submit", async (req, res) => {
-
   const secret = req.body.secret;
   console.log(secret);
-  if(secret.length> 0){
+  if (secret.length > 0) {
     try {
-      const result = await db.query("UPDATE users SET secret = $1 WHERE email = $2",[secret,req.user.email]);
+      await db.query("UPDATE users SET secret = $1 WHERE email = $2", [
+        secret,
+        req.user.email,
+      ]);
       res.redirect("/secrets");
     } catch (err) {
       console.log(err);
     }
-    
   }
-
-
 });
+
 passport.use(
   "local",
   new Strategy(async function verify(username, password, cb) {
@@ -227,6 +230,7 @@ passport.use(
     }
   )
 );
+
 passport.serializeUser((user, cb) => {
   cb(null, user);
 });
