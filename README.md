@@ -1,4 +1,6 @@
 # Secrets Application
+##deployed site 
+https://secretsite-1.onrender.com/
 
 ## Description
 The **Secrets Application** is a secure platform where users can anonymously share and view secrets. It is designed with user authentication and data privacy as core principles. The project demonstrates the practical implementation of web development concepts, focusing on secure user authentication, database management, and OAuth integration.
